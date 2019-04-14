@@ -14,7 +14,7 @@ Download the full grade books from Desire2Learn and store them in a directory ov
 
 ## Grade Correlations
 
-Make a graph of the correlations between grade items. If there is a category, then we will use the category instead of all the individual items. 
+Make a graph of the correlations between grade items. If there is a category, then we will use the category instead of all the individual items.
 
 - run `D2L.grade.correlations.R`
 - creates a graph and table
@@ -38,4 +38,4 @@ Creates a timeline of a student's grade.
 - run `D2L.grade.timeline.R`
 - saves graphs in results folder
 
-!(Example of grade time dependence)[D2L.grade.timeline.FACETS.top20.png]
+![Example of grade time dependence](D2L.grade.timeline.FACETS.top20.png)

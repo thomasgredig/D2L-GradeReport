@@ -29,7 +29,7 @@ grep('.Subtotal.Numerator$',titles) -> q2
 # all points grade not in category
 q3 = which(grepl('.Points.Grade..Numeric.', titles) &
   !(grepl('.Category.', titles))) 
-if (only.SUBCATs) {q3 = c()}
+if (only.SUBCATs==TRUE) {q3 = c()}
 mydata <- data[,c(q2,q3)]
 gsub('.Points.Grade.*','',names(mydata)) -> names(mydata)
 gsub('.Subtotal.Numerator','',names(mydata)) -> names(mydata)
