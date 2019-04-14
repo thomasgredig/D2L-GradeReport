@@ -19,6 +19,13 @@ Make a graph of the correlations between grade items. If there is a category, th
 - run `D2L.grade.correlations.R`
 - creates a graph and table
 
+Example output:
 ![grade correlations](D2L.grade.analysis.CORRELATION.png)
 
+
+## Student Report
+
+Simple student report with mean values for each category
+
+- run `report.Student.R` and modify last name
 
