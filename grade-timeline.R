@@ -5,14 +5,13 @@
 ###################################
 
 library(ggplot2)
+source('config.R')
 
-path = '/Volumes/class/Phys152 2016 Summer/Grades'
-dir(path, pattern='csv$') -> file.list
 result = data.frame()
 
 for(i in 1:length(file.list)) {
   filename = file.list[i]
-  data <- read.csv(file.path(path, filename))
+  data <- read.csv(filename)
   
   d <- data.frame(StudentID = data$OrgDefinedId,
              Lastname = data$Last.Name,

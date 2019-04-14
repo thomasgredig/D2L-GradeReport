@@ -5,18 +5,18 @@
 #
 #######################
 library(ggplot2)
-
+source('config.R')
 
 # ENTER PATH WITH CSV files from Beachboard (Desire2Learn)
-path = '/Volumes/class/COURSES/Phys152 2016 Summer/Grades'
-path = '/Volumes/class/Phys152 2016 Fall/Grades'
-
-dir(path)
-dir(path, pattern='^PHYS.*\\.csv$') -> file.list
+# path = '/Volumes/class/COURSES/Phys152 2016 Summer/Grades'
+# path = '/Volumes/class/Phys152 2016 Fall/Grades'
+# 
+# dir(path)
+# dir(path, pattern='^PHYS.*\\.csv$') -> file.list
 
 result = data.frame()
-for(file.list.name in file.list) {
-  fname <- file.path(path,file.list.name)
+for(fname in file.list) {
+  #fname <- file.path(path,file.list.name)
   read.csv(fname) -> data
   names(data)
   which(names(data)=='Calculated.Final.Grade.Numerator' |
@@ -51,4 +51,4 @@ result$lname2 = paste0(substr(result$First.Name,1,4),substr(result$Last.Name,3,5
 #ggplot(result, aes(day, grade)) + geom_line() + facet_grid(. ~ lname)
 ggplot(result, aes(day, grade)) + geom_line() + facet_wrap( ~ lname2, ncol=10) +
   theme(axis.text.x = element_text(angle = 90, hjust = 1))
-ggsave('student-progress_Fall206b.png', width=12, height=8)
+ggsave(FILE.grade.timeline, width=12, height=8)

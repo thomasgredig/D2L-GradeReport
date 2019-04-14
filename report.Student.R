@@ -4,8 +4,8 @@
 
 library(ggplot2)
 library(knitr)
-file.grades = 'grades2.csv'
-studentID = '#014911908'
+file.grades = file.latest
+student.LastName = 'Palm'
 
 # load grades and data
 data = read.csv(file.grades)
@@ -15,7 +15,7 @@ grep('.Subtotal.Numer',titles) -> q2
 mydata <- data[,q2]
 gsub('.Subtotal.Numerator','',names(mydata)) -> names(mydata)
 
-which(data$OrgDefinedId==studentID) -> Student.column
+grep(student.LastName,data$Last.Name) -> Student.column
 mydata[Student.column,]
 
 paste(data[Student.column,2], data[Student.column,3]) -> Student.name

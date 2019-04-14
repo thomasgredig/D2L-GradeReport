@@ -1,16 +1,39 @@
-library(ggplot2)
+#########################################################
+#
+# Author: Thomas Gredig
+# Date: 2016-08-22
+#
+# Gradebook correlations
+#
+#########################################################
 
-file.grades = 'grades.csv'
+
+# load libraries and configuration
+library(ggplot2)
+library(PerformanceAnalytics)
+source('config.R')
+
+# load the data
+file.grades = file.latest
+if (!file.exists(file.grades)) { print("ERROR: grade file not found.") }
 data = read.csv(file.grades)
 
 # remove all NA only columns
 data[,  colSums(is.na(data)) != nrow(data)] -> data
 
 titles = names(data)
+titles
 
-grep('.Subtotal.Numer',titles) -> q2
-mydata <- data[,q2]
+# find all categories
+grep('.Subtotal.Numerator$',titles) -> q2  
+# all points grade not in category
+q3 = which(grepl('.Points.Grade..Numeric.', titles) &
+  !(grepl('.Category.', titles))) 
+q3=c()
+mydata <- data[,c(q2,q3)]
+gsub('.Points.Grade.*','',names(mydata)) -> names(mydata)
 gsub('.Subtotal.Numerator','',names(mydata)) -> names(mydata)
+
 cor(mydata)
 
 ## see http://www.gettinggeneticsdone.com/2012/08/more-on-exploring-correlations-in-r.html
@@ -40,38 +63,15 @@ flattenSquareMatrix <- function(m) {
 }
 
 # correlation matrix with p-values
-cor.prob(mydata)
+write.csv(data.frame(cor.prob(mydata)),
+          file = FILE.CORR.table)
 
 # "flatten" that table
 flattenSquareMatrix(cor.prob(mydata))
 
 # plot the data
-library(PerformanceAnalytics)
+png(FILE.CORR, width=2000, height=1600)
 chart.Correlation(mydata)
+dev.off()
 
-strsplit(titles,'.Points.Grade.') -> q
-which(unlist(lapply(q, length))==2) -> p
-
-unlist(lapply(q,'[[',1)) -> title.short
-gsub('\\.',' ',title.short) -> title.short    # replace .
-
-p[1]
-title.short[p[1]]
-hist(data[,p[1]])
-
-data[,  colSums(is.na(data)) != nrow(data)] -> t
-
-
-for (i in 1:length(p)) {
-  #hist(data[,p[i]], main = title.short[p[i]])
-  df = data.frame(lastname = data[2],
-                  firstname = data[3],
-                  x = data[,p[i]])
-  df = na.omit(df)
-  ggplot(df, aes(x)) + geom_histogram(binwidth=max(df$x)/10, col='red', fill='orange') +
-    ggtitle(paste(title.short[p[i]],', N=',
-                  nrow(df),', mean=',
-                  signif(mean(df$x),digits=3),', sd=',
-                  signif(sd(df$x), digits=3)))
-}
 
