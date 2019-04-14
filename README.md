@@ -39,3 +39,9 @@ Creates a timeline of a student's grade.
 - saves graphs in results folder
 
 ![Example of grade time dependence](D2L.grade.timeline.FACETS.top20.png)
+
+## Grade Report
+
+Generate a histogram of each grade report item.
+
+- run `Grade.Report.Rmd` and knit into PDF or HTML

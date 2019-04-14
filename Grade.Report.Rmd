@@ -1,0 +1,45 @@
+---
+title: "Grade-Report"
+author: "Thomas Gredig"
+date: "July 16, 2015"
+output: pdf_document
+---
+
+Grade Report
+============
+
+```{r}
+library(ggplot2)
+source('config.R')
+```
+
+
+```{r}
+data = read.csv(file.latest)
+
+# remove all NA only columns
+data[,  colSums(is.na(data)) != nrow(data)] -> data
+
+titles = names(data)
+
+strsplit(titles,'.Points.Grade.') -> q
+which(unlist(lapply(q, length))==2) -> p
+
+unlist(lapply(q,'[[',1)) -> title.short
+gsub('\\.',' ',title.short) -> title.short    # replace .
+data[,  colSums(is.na(data)) != nrow(data)] -> t
+
+
+for (i in 1:length(p)) {
+  df = data.frame(lastname = data[2],
+                  firstname = data[3],
+                  x = data[,p[i]])
+  df = na.omit(df)
+  ggplot(df, aes(x)) + geom_histogram(binwidth=max(df$x)/10, col='red', fill='orange') +
+    ggtitle(paste(title.short[p[i]],', N=',
+                  nrow(df),', mean=',
+                  signif(mean(df$x),digits=3),', sd=',
+                  signif(sd(df$x), digits=3))) -> m
+  print(m)
+}
+```
