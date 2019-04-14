@@ -29,3 +29,13 @@ Simple student report with mean values for each category
 
 - run `report.Student.R` and modify last name
 
+
+
+## Grade Timeline
+
+Creates a timeline of a student's grade.
+
+- run `D2L.grade.timeline.R`
+- saves graphs in results folder
+
+!(Example of grade time dependence)[D2L.grade.timeline.FACETS.top20.png]

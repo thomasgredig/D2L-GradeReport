@@ -39,7 +39,7 @@ result$name = paste(result$First.Name,result$Last.Name)
 
 # creating title
 as.Date(result$date,"%m-%d") -> result$day
-result$lname = paste0(substr(result$First.Name,1,4),substr(result$Last.Name,1,4))
+result$lname = paste0(substr(result$First.Name,4,4),substr(result$Last.Name,2,2))
 result$lname2 = paste0(substr(result$First.Name,1,5),substr(result$Last.Name,1,1))
 
 
@@ -69,7 +69,7 @@ ggplot(subset(result, OrgDefinedId %in% r1), aes(day, grade)) +
   scale_y_continuous(limits = c(0.5,1.0), breaks=c(0.6,0.8,1)) + 
   theme(axis.text.x = element_text(angle = 90, hjust = 1),
         legend.position = 'none')
-ggsave(FILE.grade.timeline.top20, width=12, height=8)
+ggsave(FILE.grade.timeline.top20, width=4, height=3)
 
 # Middle 60%
 ggplot(subset(result, OrgDefinedId %in% r2), aes(day, grade)) + 
@@ -80,8 +80,8 @@ ggplot(subset(result, OrgDefinedId %in% r2), aes(day, grade)) +
   geom_line() + facet_wrap( ~ lname, ncol=6) +
   scale_y_continuous(limits = c(0.3,1.0), breaks=c(0.6,0.8,1)) + 
   theme(axis.text.x = element_text(angle = 90, hjust = 1),
-        legend.position = 'none')
-ggsave(FILE.grade.timeline.middle, width=12, height=8)
+        legend.position = 'none', strip.text.x = element_text(size = 6))
+ggsave(FILE.grade.timeline.middle, width=4, height=3, dpi=220)
 
 # Bottom 20%
 ggplot(subset(result, OrgDefinedId %in% r3), aes(day, grade)) +  
@@ -93,5 +93,5 @@ ggplot(subset(result, OrgDefinedId %in% r3), aes(day, grade)) +
   theme(axis.text.x = element_text(angle = 90, hjust = 1),
         legend.position = 'none' )
 
-ggsave(FILE.grade.timeline.bottom20, width=12, height=8)
+ggsave(FILE.grade.timeline.bottom20, width=4, height=3)
 
