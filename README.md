@@ -22,6 +22,11 @@ Make a graph of the correlations between grade items. If there is a category, th
 Example output:
 ![grade correlations](D2L.grade.analysis.CORRELATION.png)
 
+Full correlation map is obtained with:
+
+- run `D2L.all.correlations.R`
+- creates a graph and saves in the source directory
+
 
 ## Student Report
 
