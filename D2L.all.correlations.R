@@ -20,7 +20,11 @@ strsplit(pts,'.Weight.') -> a
 gsub('..Numeric.MaxPoints.','',sapply(a, "[", 1)) -> pts
 
 # graph correlations
-M <- cor(na.omit(data[,numCols]))
+q = data[,numCols]
+# remove unpopulated columns
+q[,as.vector(which(apply(q, 2, sum)==0))] <- NULL
+q[is.na(q)] <- 0
+M <- cor(q)
 corrplot(M, method = "ellipse") #, order="hclust")
 
 # save file:
@@ -34,7 +38,7 @@ png(
   pointsize = 4
 )
 
-corrplot(M, method = "circle")
+corrplot(M, method = "ellipse")
 dev.off()
 
 
