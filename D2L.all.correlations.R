@@ -22,8 +22,9 @@ gsub('..Numeric.MaxPoints.','',sapply(a, "[", 1)) -> pts
 # graph correlations
 q = data[,numCols]
 # remove unpopulated columns
-q[,as.vector(which(apply(q, 2, sum)==0))] <- NULL
 q[is.na(q)] <- 0
+q[,as.vector(which(apply(q, 2, sum)==0))] <- NULL
+
 M <- cor(q)
 corrplot(M, method = "ellipse") #, order="hclust")
 
@@ -40,6 +41,3 @@ png(
 
 corrplot(M, method = "ellipse")
 dev.off()
-
-
-
