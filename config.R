@@ -10,8 +10,9 @@ path.source = '.'
 path.results = '.'
 # include subcategories only, or also main grade items
 only.SUBCATs = FALSE
-source('myConfig.R')  # to overwrite certain files
-
+if(file.exists('myConfig.R')) {
+  source('myConfig.R')  # to overwrite certain files
+}
 
 # this part does not need configuration
 
