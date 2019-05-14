@@ -81,7 +81,7 @@ ggplot(subset(result, OrgDefinedId %in% r2), aes(day, grade)) +
   scale_y_continuous(limits = c(0.3,1.0), breaks=c(0.6,0.8,1)) + 
   theme(axis.text.x = element_text(angle = 90, hjust = 1),
         legend.position = 'none', strip.text.x = element_text(size = 6))
-ggsave(FILE.grade.timeline.middle, width=6, height=4, dpi=220)
+ggsave(FILE.grade.timeline.middle, width=6, height=12, dpi=220)
 
 # Bottom 20%
 ggplot(subset(result, OrgDefinedId %in% r3), aes(day, grade)) +  
