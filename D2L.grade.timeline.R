@@ -35,6 +35,7 @@ for(fname in file.list) {
 
 result$data = factor(result$date)
 result$name = paste(result$First.Name,result$Last.Name)
+
 # ggplot(result, aes(name, grade, color=date)) + geom_point()
 
 # creating title
@@ -95,3 +96,38 @@ ggplot(subset(result, OrgDefinedId %in% r3), aes(day, grade)) +
 
 ggsave(FILE.grade.timeline.bottom20, width=6, height=4)
 
+# make graphs for each student
+# convert all factors to strings
+i <- sapply(result, is.factor)
+result[i] <- lapply(result[i], as.character)
+
+result$OrgDefinedId = factor(result$OrgDefinedId)
+result$data = as.Date(r1$date, format='%m-%d')
+str(result)
+studentID = levels(result$OrgDefinedId)[result$OrgDefinedId[13]]
+result$filename = paste0(substr(result$Last.Name, 1,3), substr(result$OrgDefinedId,6,10),'.png')
+for(studentID in levels(result$OrgDefinedId)) {
+  r1 = subset(result, result$OrgDefinedId == studentID)   
+  ggplot(r1, aes(data, grade*100)) + 
+    geom_point(col='black', size=5.5) +
+    geom_point(col='darkgreen', size=5) + geom_line() + 
+    geom_point(data = subset(r1, grade<0.9), col='lightgreen', size=5) +
+    geom_point(data = subset(r1, grade<0.8), col='yellow', size=5) +
+    geom_point(data = subset(r1, grade<0.7), col='orange', size=5) +
+    geom_point(data = subset(r1, grade<0.6), col='red', size=5) +
+    scale_y_continuous(limits=c(0,100)) +
+    ylab('Grade (%)') + xlab('date') + 
+    geom_rect( xmin = -Inf, xmax = +Inf, ymin =  0, ymax = 60, col='transparent', fill='red',
+             alpha = 0.1) +
+    geom_rect( xmin = -Inf, xmax = +Inf, ymin =  60, ymax = 70, col='transparent', fill='orange',
+               alpha = 0.1) +
+    geom_rect( xmin = -Inf, xmax = +Inf, ymin =  70, ymax = 80, col='transparent', fill='yellow',
+               alpha = 0.1) +
+    geom_rect( xmin = -Inf, xmax = +Inf, ymin =  80, ymax = 90, col='transparent', fill='lightgreen',
+               alpha = 0.1) +
+    geom_rect( xmin = -Inf, xmax = +Inf, ymin =  90, ymax = 100, col='transparent', fill='green',
+               alpha = 0.1) +
+    ggtitle(paste(result$First.Name,result$Last.Name)) +
+    theme_bw(base_size = 18)
+  ggsave(file.path(path.results,r1$filename[1]), width=6, height=4, dpi=220)
+}
