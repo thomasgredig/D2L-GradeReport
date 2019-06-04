@@ -105,7 +105,7 @@ result$OrgDefinedId = factor(result$OrgDefinedId)
 result$data = as.Date(result$date, format='%m-%d')
 str(result)
 studentID = levels(result$OrgDefinedId)[result$OrgDefinedId[13]]
-result$filename = paste0(substr(result$Last.Name, 1,3), substr(result$OrgDefinedId,6,10),'.png')
+result$filename = paste0(substr(result$Last.Name, 1,3), substr(result$OrgDefinedId,8,10),'.png')
 for(studentID in levels(result$OrgDefinedId)) {
   r1 = subset(result, result$OrgDefinedId == studentID)   
   ggplot(r1, aes(data, grade*100)) + 
@@ -127,7 +127,7 @@ for(studentID in levels(result$OrgDefinedId)) {
                alpha = 0.1) +
     geom_rect( xmin = -Inf, xmax = +Inf, ymin =  90, ymax = 100, col='transparent', fill='green',
                alpha = 0.1) +
-    ggtitle(paste('Sem: ',result$First.Name,result$Last.Name)) +
+    ggtitle(paste('Sem: ',r1$First.Name,r1$Last.Name)) +
     theme_bw(base_size = 18)
   ggsave(file.path(path.results,r1$filename[1]), width=6, height=4, dpi=220)
 }
