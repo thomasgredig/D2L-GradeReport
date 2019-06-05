@@ -110,8 +110,11 @@ for(studentID in levels(result$OrgDefinedId)) {
 
 
 ## make a points plot
-result$q = as.numeric(gsub('-','',levels(result$data)[result$data]))
-ggplot(data = result, aes(q, points, color=OrgDefinedId)) + 
-  geom_line()
-
 str(result)
+ggplot(data = result, aes(as.numeric(days), points, color=OrgDefinedId)) + 
+  geom_line() +
+  geom_line(data = subset(result, OrgDefinedId == studentID), col='red', size=3) + 
+  theme_bw() +
+  xlab('days') + 
+  theme(legend.position = 'none')
+
