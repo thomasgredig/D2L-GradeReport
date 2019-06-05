@@ -8,14 +8,14 @@
 #
 #########################################################
 
-library(ggplot2)
+library(ggplot2)   
 source('config.R')
 for(q1 in dir('R', pattern='[^(main)].*\\.R$')) { source(file.path('R',q1)) }
 
 file.list = find.fileList(path.source)
 file.latest = get.latestFile(file.list)
 result = read.grades(file.list)
-
+head(result)
 
 
 ggplot(result, aes(day, grade)) + geom_line() + facet_wrap( ~ lname, ncol=10) +
@@ -77,8 +77,8 @@ result[i] <- lapply(result[i], as.character)
 
 result$OrgDefinedId = factor(result$OrgDefinedId)
 result$data = as.Date(result$date, format='%m-%d')
-str(result)
-studentID = levels(result$OrgDefinedId)[result$OrgDefinedId[13]]
+
+#studentID = levels(result$OrgDefinedId)[result$OrgDefinedId[13]]
 result$filename = paste0(substr(result$Last.Name, 1,3), substr(result$OrgDefinedId,8,10),'.png')
 for(studentID in levels(result$OrgDefinedId)) {
   r1 = subset(result, result$OrgDefinedId == studentID)
@@ -103,5 +103,15 @@ for(studentID in levels(result$OrgDefinedId)) {
                alpha = 0.1) +
     ggtitle(paste('Sem: ',r1$First.Name[1],r1$Last.Name[1])) +
     theme_bw(base_size = 18)
+  
   ggsave(file.path(path.results,r1$filename[1]), width=6, height=4, dpi=220)
 }
+
+
+
+## make a points plot
+result$q = as.numeric(gsub('-','',levels(result$data)[result$data]))
+ggplot(data = result, aes(q, points, color=OrgDefinedId)) + 
+  geom_line()
+
+str(result)

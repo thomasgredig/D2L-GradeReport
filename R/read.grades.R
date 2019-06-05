@@ -3,8 +3,7 @@
 read.grades <- function(file.list) {
   result = data.frame()
   for(fname in file.list) {
-    read.csv(fname) -> data
-    names(data)
+    read.csv(fname, stringsAsFactors = FALSE) -> data
     which(names(data)=='Calculated.Final.Grade.Numerator' |
             names(data)=='Calculated.Final.Grade.Denominator') -> q
     d <- data[,c(1,2,3,q)]
@@ -19,16 +18,17 @@ read.grades <- function(file.list) {
     substr(full.date, 6,10) -> short.date
     d$date = short.date
     d$full.date = full.date
-    print(full.date)
-    rbind(result,d[,c(1,2,3,7,6)]) -> result
+
+    #rbind(result,d[,c(1,2,3,7,6)]) -> result
+    rbind(result,d) -> result
   }
   
   result$data = factor(result$date)
   result$name = paste(result$First.Name,result$Last.Name)
-  str(result)
 
   # creating title
   as.Date(result$date,"%m-%d") -> result$day
+  result$days = difftime(result$day, min(result$day), units='days')
   result$lname = paste0(substr(result$First.Name,1,1),substr(result$Last.Name,1,5))
   result$lname2 = paste0(substr(result$First.Name,1,5),substr(result$Last.Name,1,1))
   
