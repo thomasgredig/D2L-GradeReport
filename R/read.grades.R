@@ -9,6 +9,7 @@ read.grades <- function(file.list) {
     d <- data[,c(1,2,3,q)]
     names(d)[4] = 'points'
     names(d)[5] = 'total'
+    if(length(is.na(d$points))>0) { d$points[is.na(d$points)] <- 0 }
     d$grade = d$points / max(d$points)
     
     # get date

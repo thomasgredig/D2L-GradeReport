@@ -15,8 +15,7 @@ for(q1 in dir('R', pattern='[^(main)].*\\.R$')) { source(file.path('R',q1)) }
 file.list = find.fileList(path.source)
 file.latest = get.latestFile(file.list)
 result = read.grades(file.list)
-head(result)
-
+tail(result)
 
 ggplot(result, aes(day, grade)) + geom_line() + facet_wrap( ~ lname, ncol=10) +
   #scale_y_continuous(limits = c(0.5,1.0), breaks=c(0.6,0.8,1)) +
