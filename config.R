@@ -26,3 +26,5 @@ FILE.grade.timeline.middle = file.path(path.results,'D2L.grade.timeline.FACETS.m
 FILE.grade.timeline.bottom20 = file.path(path.results,'D2L.grade.timeline.FACETS.bottom20.png')
 
 
+file.list = find.fileList(path.source)
+file.latest = get.latestFile(file.list)

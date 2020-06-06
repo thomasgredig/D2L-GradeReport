@@ -12,8 +12,7 @@ library(ggplot2)
 source('config.R')
 for(q1 in dir('R', pattern='[^(main)].*\\.R$')) { source(file.path('R',q1)) }
 
-file.list = find.fileList(path.source)
-file.latest = get.latestFile(file.list)
+
 result = read.grades(file.list)
 tail(result)
 

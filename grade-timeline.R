@@ -6,12 +6,12 @@
 
 library(ggplot2)
 source('config.R')
-
+file.list = dir(path.source)
 result = data.frame()
 
-for(i in 1:length(file.list)) {
-  filename = file.list[i]
-  data <- read.csv(filename)
+for(filename in file.list) {
+  print(filename)
+  data <- read.csv(file.path(path.source, filename))
   
   d <- data.frame(StudentID = data$OrgDefinedId,
              Lastname = data$Last.Name,
