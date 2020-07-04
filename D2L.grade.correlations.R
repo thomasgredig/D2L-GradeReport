@@ -17,6 +17,7 @@ source('config.R')
 file.grades = file.latest
 if (!file.exists(file.grades)) { print("ERROR: grade file not found.") }
 data = read.csv(file.grades)
+print(file.grades)
 
 # remove all NA only columns
 data[,  colSums(is.na(data)) != nrow(data)] -> data
@@ -70,6 +71,7 @@ write.csv(data.frame(cor.prob(mydata)),
 flattenSquareMatrix(cor.prob(mydata))
 
 # plot the data
+print(FILE.CORR)
 png(FILE.CORR, width=2000, height=1600)
 chart.Correlation(mydata)
 dev.off()

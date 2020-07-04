@@ -6,7 +6,7 @@
 
 library(ggplot2)
 source('config.R')
-file.list = dir(path.source)
+file.list = dir(path.source, pattern='csv$')
 result = data.frame()
 
 for(filename in file.list) {
@@ -29,3 +29,4 @@ for(filename in file.list) {
 
 ggplot(result, aes(y=Grade, x=date, group=Firstname, label=Firstname)) + 
   geom_line(aes(col=Firstname), size=1, alpha=0.4) + theme_bw()
+ggsave(file.path(path.results,'D2L.grade-timeline-AllStudents.png'), width=8, height=4, dpi=300)

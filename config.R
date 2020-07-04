@@ -3,7 +3,7 @@
 
 # PATHS
 # -----
-
+for(q1 in dir('R', pattern='[^(main)].*\\.R$')) { source(file.path('R',q1)) }
 # path with D2L Grades - can be overwritten in myConfig.R
 path.source = '.'
 # path for output graphs

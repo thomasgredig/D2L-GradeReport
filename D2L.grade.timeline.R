@@ -10,8 +10,6 @@
 
 library(ggplot2)   
 source('config.R')
-for(q1 in dir('R', pattern='[^(main)].*\\.R$')) { source(file.path('R',q1)) }
-
 
 result = read.grades(file.list)
 tail(result)
