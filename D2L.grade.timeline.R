@@ -114,3 +114,10 @@ ggplot(data = result, aes(as.numeric(days), points, color=OrgDefinedId)) +
   xlab('days') + 
   theme(legend.position = 'none')
 
+d = data.frame(
+  OrgDefinedId = result$OrgDefinedId,
+  `Grade Summary Image Text Grade` = paste0(pth, result$filename),
+  `End-of-Line Indicator` = '#'
+)
+write.csv(d, file=file.path(path.source,'output-GRADEimage.csv'), row.names = FALSE)
+pth
