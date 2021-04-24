@@ -6,6 +6,7 @@ read.grades <- function(file.list) {
     read.csv(fname, stringsAsFactors = FALSE) -> data
     which(names(data)=='Calculated.Final.Grade.Numerator' |
             names(data)=='Calculated.Final.Grade.Denominator') -> q
+    if (length(q)==0) next;
     d <- data[,c(1,2,3,q)]
     names(d)[4] = 'points'
     names(d)[5] = 'total'

@@ -79,12 +79,6 @@ result$filename = paste0(substr(result$Last.Name, 1,3), substr(result$OrgDefined
 for(studentID in levels(result$OrgDefinedId)) {
   r1 = subset(result, result$OrgDefinedId == studentID)
   ggplot(r1, aes(data, grade*100)) +
-    geom_point(col='black', size=5.5) +
-    geom_point(col='darkgreen', size=5) + geom_line() +
-    geom_point(data = subset(r1, grade<0.9), col='lightgreen', size=5) +
-    geom_point(data = subset(r1, grade<0.8), col='yellow', size=5) +
-    geom_point(data = subset(r1, grade<0.7), col='orange', size=5) +
-    geom_point(data = subset(r1, grade<0.6), col='red', size=5) +
     scale_y_continuous(limits=c(0,100)) +
     ylab('Grade (%)') + xlab('date') +
     geom_rect( xmin = -Inf, xmax = +Inf, ymin =  0, ymax = 60, col='transparent', fill='red',
@@ -97,6 +91,12 @@ for(studentID in levels(result$OrgDefinedId)) {
                alpha = 0.1) +
     geom_rect( xmin = -Inf, xmax = +Inf, ymin =  90, ymax = 100, col='transparent', fill='green',
                alpha = 0.1) +
+    geom_point(col='black', size=6) +
+    geom_point(col='darkgreen', size=5) + geom_line() +
+    geom_point(data = subset(r1, grade<0.9), col='lightgreen', size=5) +
+    geom_point(data = subset(r1, grade<0.8), col='yellow', size=5) +
+    geom_point(data = subset(r1, grade<0.7), col='orange', size=5) +
+    geom_point(data = subset(r1, grade<0.6), col='red', size=5) +
     ggtitle(paste('Sem: ',r1$First.Name[1],r1$Last.Name[1])) +
     theme_bw(base_size = 18)
   
